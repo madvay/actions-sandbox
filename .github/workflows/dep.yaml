@@ -24,12 +24,18 @@ jobs:
               environment: 'appengine-staging',
               required_contexts: [], 
             });
+            const { data: { html_url: logUrl } } = await github.actions.getJobForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              job_id: context.job,
+            });
+            const logUrl = (await
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               deployment_id: deployment.id,
               state: 'in_progress',
-              target_url: 'https://github.com/advayDev1/actions-sandbox-ignore/edit/master/.github/workflows/dep.yaml',
+              target_url: logUrl,
               environment_url: 'https://github.com/advayDev1/actions-sandbox-ignore/',
             });
             return deployment.id;
