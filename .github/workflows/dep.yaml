@@ -10,7 +10,7 @@ jobs:
     name: DoStuff
     runs-on: ubuntu-latest
     env:
-      LOG_URL: "https://github.com/${{github.repository}}/runs/${{github.run_id}}"
+      LOG_URL: "https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/github-script@v2
@@ -33,5 +33,19 @@ jobs:
               state: 'in_progress',
               target_url: process.env.LOG_URL,
               environment_url: 'https://github.com/advayDev1/actions-sandbox-ignore/',
+            });
+            return deployment.id;
+      - run: echo a
+      - uses: actions/github-script@v2
+        if: always()
+        with:
+          previews: flash
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: '${{job.status}}' === 'success' ? 'success' : 'failure',
             });
             return deployment.id;
