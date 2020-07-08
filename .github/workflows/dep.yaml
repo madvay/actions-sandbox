@@ -36,7 +36,7 @@ jobs:
               environment_url: 'https://github.com/advayDev1/actions-sandbox-ignore/',
             });
             return deployment.id;
-      - run: echo a
+      - run: ./blahblah
       - uses: actions/github-script@v2
         if: always()
         with:
