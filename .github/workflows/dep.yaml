@@ -13,7 +13,8 @@ jobs:
       LOG_URL: "https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/github-script@v2
+      - id: createDeployment
+        uses: actions/github-script@v2
         with:
           previews: flash
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -45,7 +46,7 @@ jobs:
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              deployment_id: deployment.id,
+              deployment_id: '${{steps.createDeployment.outputs.result}}',
               state: '${{job.status}}' === 'success' ? 'success' : 'failure',
             });
             return deployment.id;
