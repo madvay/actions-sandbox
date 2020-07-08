@@ -16,7 +16,7 @@ jobs:
       - id: createDeployment
         uses: actions/github-script@v2
         with:
-          previews: flash
+          previews: flash,ant-man
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const { data: deployment } = await github.repos.createDeployment({
@@ -32,15 +32,14 @@ jobs:
               repo: context.repo.repo,
               deployment_id: deployment.id,
               state: 'in_progress',
-              target_url: process.env.LOG_URL,
-              environment_url: 'https://github.com/advayDev1/actions-sandbox-ignore/',
+              log_url: process.env.LOG_URL,
             });
             return deployment.id;
       - run: ./blahblah
       - uses: actions/github-script@v2
         if: always()
         with:
-          previews: flash
+          previews: flash,ant-man
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             await github.repos.createDeploymentStatus({
@@ -48,4 +47,7 @@ jobs:
               repo: context.repo.repo,
               deployment_id: '${{steps.createDeployment.outputs.result}}',
               state: '${{job.status}}' === 'success' ? 'success' : 'failure',
+              log_url: process.env.LOG_URL,
+              environment_url: 'https://github.com/advayDev1/actions-sandbox-ignore/',
+              auto_inactive: '${{job.status}}' === 'success'
             });
