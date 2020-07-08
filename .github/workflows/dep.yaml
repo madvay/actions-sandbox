@@ -23,7 +23,12 @@ jobs:
               environment: 'appengine-staging',
               required_contexts: [], 
             });
-            console.log(deployment.id);
-            const exec = require('@actions/exec');
-            await exec.exec('bash ./file.sh');
-     
+            await octokit.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: 'in_progress',
+              target_url: 'https://github.com/advayDev1/actions-sandbox-ignore/edit/master/.github/workflows/dep.yaml',
+              environment_url: 'https://github.com/advayDev1/actions-sandbox-ignore/',
+            });
+            return deployment.id;
