@@ -35,7 +35,7 @@ jobs:
               log_url: process.env.LOG_URL,
             });
             return deployment.id;
-      - run: ./blahblah
+      - run: echo 6
       - uses: actions/github-script@v2
         if: always()
         with:
