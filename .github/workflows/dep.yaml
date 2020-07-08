@@ -49,4 +49,3 @@ jobs:
               deployment_id: '${{steps.createDeployment.outputs.result}}',
               state: '${{job.status}}' === 'success' ? 'success' : 'failure',
             });
-            return deployment.id;
