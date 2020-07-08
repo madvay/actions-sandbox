@@ -22,7 +22,7 @@ jobs:
               auto_merge: false,
               environment: 'appengine-staging',
               required_contexts: [], 
-            }));
+            });
             console.log(deployment.id);
             const exec = require('@actions/exec');
             await exec.exec('bash ./file.sh');
