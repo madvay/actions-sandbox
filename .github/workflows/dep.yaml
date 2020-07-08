@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/github-script@v2
         with:
+          previews: application/vnd.github.flash-preview+json
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const { data: deployment } = await github.repos.createDeployment({
