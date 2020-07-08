@@ -10,7 +10,7 @@ jobs:
     name: DoStuff
     runs-on: ubuntu-latest
     env:
-      LOG_URL: "https://github.com/${{github.repository}}/runs/${{github.job}}"
+      LOG_URL: "https://github.com/${{github.repository}}/runs/${{github.run_id}}"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/github-script@v2
