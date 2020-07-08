@@ -15,7 +15,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(await github.repos.createDeployment({
+            const { data: { deployment } } = await github.repos.createDeployment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: context.sha,
@@ -23,6 +23,7 @@ jobs:
               environment: 'appengine-staging',
               required_contexts: [], 
             }));
+            console.log(deployment.id);
             const exec = require('@actions/exec');
             await exec.exec('bash ./file.sh');
      
