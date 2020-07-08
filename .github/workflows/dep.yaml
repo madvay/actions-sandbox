@@ -1,0 +1,27 @@
+name: TEST2
+on:
+  push:
+    # branches: [ master ]
+    paths:
+      - '.github/workflows/**'
+
+jobs:
+  stuff:
+    name: DoStuff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            console.log(await github.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              auto_merge: false,
+              environment: 'appengine-staging'
+            }));
+            const exec = require('@actions/exec');
+            await exec.exec('bash ./file.sh');
+     
