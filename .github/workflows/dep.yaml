@@ -29,7 +29,6 @@ jobs:
               repo: context.repo.repo,
               job_id: context.job,
             });
-            const logUrl = (await
             await github.repos.createDeploymentStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
