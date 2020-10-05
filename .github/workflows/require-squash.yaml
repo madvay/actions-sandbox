@@ -1,0 +1,14 @@
+name: EnforceSquash
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  require_squash:
+    name: Pull request must be squashed to single commit
+    runs-on: ubuntu-latest
+    env:
+      LOG_URL: "https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+    steps:
+      - uses: actions/checkout@v2
+      - run: 'git log --oneline ${{context.sha}} ^master | wc -l'
