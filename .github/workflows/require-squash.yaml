@@ -11,6 +11,6 @@ jobs:
       LOG_URL: "https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
     steps:
       - uses: actions/checkout@v2
-      - run: 'git log --oneline ${{context.sha}} ^master | wc -l'
+      - run: 'git log --oneline ${{github.head_ref}} ^${{github.base_ref}} | wc -l'
       - run: echo DONE
         
