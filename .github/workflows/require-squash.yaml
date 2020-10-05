@@ -12,3 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: 'git log --oneline ${{context.sha}} ^master | wc -l'
+      - run: echo DONE
+        
