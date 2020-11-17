@@ -11,4 +11,10 @@ jobs:
       LOG_URL: "https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
     steps:
       - uses: actions/checkout@v2
-      - run: 'git log --oneline ${{context.sha}} ^master | wc -l'
+        with:
+          fetch-depth: 0
+      - run: 'git show origin/${{github.base_ref}}'
+      - run: 'git show origin/${{github.head_ref}}'
+      - run: 'git rev-list --count origin/${{github.base_ref}}..origin/${{github.head_ref}} | wc -l'
+      - run: echo DONE
+        
